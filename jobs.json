@@ -1,6 +1,20 @@
-
 {
-  "jobs": [],
-  "last_updated": null,
-  "status": "Awaiting first collection"
+  "jobs": [
+    {
+      "id": "c9b1c69ceca966c0",
+      "title": "CA Articleship: Registration, Rules, and Stipend - PW",
+      "firm": "See original listing",
+      "location": "India / Not specified",
+      "area": "Articleship",
+      "stipend": "",
+      "date": "Wed, 05 Feb 2025 13:17:50 GMT",
+      "summary": "CA Articleship: Registration, Rules, and Stipend PW",
+      "source": "Google News - Audit Articleship",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5NcThRNF9oaVAyUFp2N2t2ZmVKOHpPa1UxUFZ0LW5tOHV5Nlp4VXBKZXYydDRhTlpOOC1oRFB0V0paR3huOUlBUkdtbnFENzRxVXdYNnR3?oc=5"
+    }
+  ],
+  "last_updated": "2026-11-08T20:19:18.762655+00:00",
+  "status": "Collection completed",
+  "successful_feeds": 4,
+  "feed_errors": []
 }
