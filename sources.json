@@ -1,0 +1,21 @@
+
+{
+  "sources": [
+    {
+      "name": "Google News - CA Articleship",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Google News - Article Trainee",
+      "url": "https://news.google.com/rss/search?q=CA+article+trainee+vacancy+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Google News - Audit Articleship",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+audit+vacancy&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Google News - Tax Articleship",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+tax+vacancy&hl=en-IN&gl=IN&ceid=IN:en"
+    }
+  ]
+}
