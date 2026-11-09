@@ -1,4 +1,3 @@
-
 import json
 import re
 import hashlib
@@ -90,10 +89,18 @@ def fetch_feed(source):
     with urllib.request.urlopen(request, timeout=30) as response:
         root = ET.fromstring(response.read())
 
-    items = [
+        items = [
         element for element in root.iter()
         if element.tag.split("}")[-1] in ("item", "entry")
     ]
+
+    print(f'{source["name"]}: Raw feed entries = {len(items)}')
+
+    for item in items[:5]:
+        title = get_text(item, ["title"])
+        pub_date = get_text(item, ["pubDate", "published", "updated"])
+        print(f"DEBUG TITLE: {title}")
+        print(f"DEBUG DATE: {pub_date}")
 
     results = []
 
