@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CA Articleship Hub | India</title>
 <meta name="description" content="Discover CA articleship opportunities across India. Search audit, tax and accounts roles.">
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
@@ -21,6 +22,8 @@ nav a{color:white;text-decoration:none}
 .searchbox{background:white;padding:20px;border-radius:14px;box-shadow:0 5px 22px #142b4a12;margin-top:-55px;position:relative}
 input,select{width:100%;padding:13px;border:1px solid #d6deea;border-radius:8px;background:white;font-size:15px}
 .filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin-top:12px}
+.extra-filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.filter-label{font-size:13px;color:#52647a;font-weight:bold;margin-bottom:6px;display:block}
 button{border:0;border-radius:8px;padding:12px 17px;background:#1769aa;color:white;font-weight:bold;cursor:pointer}
 button:hover{opacity:.88}
 .sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
@@ -35,9 +38,14 @@ button:hover{opacity:.88}
 .empty{background:white;padding:30px;border-radius:12px;text-align:center;color:#65748a}
 footer{text-align:center;padding:30px;background:#142b4a;color:#dce6f1;margin-top:35px}
 .small{font-size:13px;color:#718096}
-@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:span 2}}
+@media(max-width:700px){
+.filters{grid-template-columns:1fr 1fr}
+.filters input{grid-column:span 2}
+.extra-filters{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
 <header>
   <div class="brand">CA Articleship Hub</div>
@@ -58,20 +66,49 @@ footer{text-align:center;padding:30px;background:#142b4a;color:#dce6f1;margin-to
 <main class="container">
   <section class="searchbox">
     <input id="search" placeholder="Search firm, role or keyword..." oninput="render()">
+
     <div class="filters">
       <input id="city" placeholder="City or state" oninput="render()">
+
       <select id="area" onchange="render()">
         <option value="">All work areas</option>
-        <option>Audit</option><option>Taxation</option>
-        <option>Accounts</option><option>GST</option>
+        <option>Audit</option>
+        <option>Taxation</option>
+        <option>Accounts</option>
+        <option>GST</option>
         <option>Internal Audit</option>
       </select>
+
       <select id="stipend" onchange="render()">
         <option value="">Any stipend</option>
         <option value="10000">₹10,000+</option>
         <option value="15000">₹15,000+</option>
         <option value="20000">₹20,000+</option>
       </select>
+    </div>
+
+    <div class="extra-filters">
+      <div>
+        <label class="filter-label" for="dateFilter">Posted within</label>
+        <select id="dateFilter" onchange="render()">
+          <option value="1">Last 24 hours</option>
+          <option value="7">Last 7 days</option>
+          <option value="15">Last 15 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="60">Last 60 days</option>
+          <option value="90">Last 90 days</option>
+          <option value="180">Last 180 days</option>
+          <option value="all">All available listings</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="filter-label" for="sortFilter">Sort listings</label>
+        <select id="sortFilter" onchange="render()">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
+      </div>
     </div>
   </section>
 
@@ -80,6 +117,7 @@ footer{text-align:center;padding:30px;background:#142b4a;color:#dce6f1;margin-to
       <h2>Latest opportunities</h2>
       <span id="count" class="small">Loading...</span>
     </div>
+
     <div id="list">
       <div class="empty">Loading opportunities...</div>
     </div>
@@ -87,7 +125,9 @@ footer{text-align:center;padding:30px;background:#142b4a;color:#dce6f1;margin-to
 
   <section id="saved">
     <h2>Saved opportunities</h2>
-    <div id="savedlist" class="empty">Your saved opportunities will appear here.</div>
+    <div id="savedlist" class="empty">
+      Your saved opportunities will appear here.
+    </div>
   </section>
 
   <section id="about">
@@ -111,13 +151,23 @@ async function loadJobs(){
   try{
     const response=await fetch("./jobs.json");
     if(!response.ok) throw new Error("No feed");
+
     const data=await response.json();
     jobs=Array.isArray(data)?data:(data.jobs||[]);
   }catch(e){
     jobs=[];
   }
+
   render();
   renderSaved();
+}
+
+function getJobDate(job){
+  if(!job.date) return null;
+
+  const date=new Date(job.date);
+
+  return Number.isNaN(date.getTime())?null:date;
 }
 
 function render(){
@@ -125,54 +175,126 @@ function render(){
   const city=document.getElementById("city").value.toLowerCase();
   const area=document.getElementById("area").value.toLowerCase();
   const stipend=Number(document.getElementById("stipend").value||0);
+  const period=document.getElementById("dateFilter").value;
+  const sort=document.getElementById("sortFilter").value;
+
+  const now=Date.now();
+  const cutoff=period==="all"?null:
+    now-Number(period)*24*60*60*1000;
 
   const filtered=jobs.filter(j=>{
-    const hay=[j.firm,j.title,j.location,j.area,j.summary].join(" ").toLowerCase();
+    const hay=[
+      j.firm,j.title,j.location,j.area,j.summary
+    ].join(" ").toLowerCase();
+
+    const jobDate=getJobDate(j);
+
+    const matchesDate=period==="all"||
+      (jobDate&&jobDate.getTime()>=cutoff&&
+       jobDate.getTime()<=now);
+
     return hay.includes(q)&&
       (j.location||"").toLowerCase().includes(city)&&
       (!area||(j.area||"").toLowerCase().includes(area))&&
-      (!stipend||Number(j.stipend||0)>=stipend);
+      (!stipend||Number(j.stipend||0)>=stipend)&&
+      matchesDate;
   });
 
-  document.getElementById("count").textContent=filtered.length+" opportunities";
-  document.getElementById("list").innerHTML=filtered.length?filtered.map(j=>`
+  filtered.sort((a,b)=>{
+    const dateA=getJobDate(a)?.getTime()||0;
+    const dateB=getJobDate(b)?.getTime()||0;
+
+    return sort==="newest"?dateB-dateA:dateA-dateB;
+  });
+
+  document.getElementById("count").textContent=
+    filtered.length+" opportunities";
+
+  document.getElementById("list").innerHTML=filtered.length?
+    filtered.map(j=>`
     <article class="job">
       <h3>${esc(j.title||"Articleship opportunity")}</h3>
+
       <strong>${esc(j.firm||"Firm name unavailable")}</strong>
-      <div class="meta">${esc(j.location||"Location not specified")} · ${esc(j.date||"Date unavailable")}</div>
+
+      <div class="meta">
+        ${esc(j.location||"Location not specified")}
+        · ${esc(j.date||"Date unavailable")}
+      </div>
+
       <div class="tags">
         <span class="tag">${esc(j.area||"Articleship")}</span>
-        <span class="tag">${j.stipend?"₹"+esc(j.stipend)+"/month":"Stipend not disclosed"}</span>
+        <span class="tag">
+          ${j.stipend?"₹"+esc(j.stipend)+"/month":"Stipend not disclosed"}
+        </span>
       </div>
+
       <p>${esc(j.summary||"See the original listing for details.")}</p>
+
       <div class="joblinks">
         ${j.url?`<a href="${safeUrl(j.url)}" target="_blank" rel="noopener">View original listing ↗</a>`:""}
+
         <button class="save" onclick="toggleSave('${esc(j.id||j.url||j.firm)}')">
           ${saved.includes(j.id||j.url||j.firm)?"Saved ✓":"Save job"}
         </button>
       </div>
-      <p class="small">Source: ${esc(j.source||"External listing")} · Verify vacancy before applying.</p>
-    </article>`).join(""):`<div class="empty">No matching opportunities found. Please try different filters. New listings will appear when the job feed is updated.</div>`;
+
+      <p class="small">
+        Source: ${esc(j.source||"External listing")}
+        · Verify vacancy before applying.
+      </p>
+    </article>`).join(""):
+    `<div class="empty">
+      No matching opportunities found. Please try different filters.
+      New listings will appear when the job feed is updated.
+    </div>`;
 }
 
 function esc(value){
-  return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
 }
+
 function safeUrl(value){
-  try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?esc(u.href):"#"}catch(e){return "#"}
+  try{
+    const u=new URL(value);
+    return ["https:","http:"].includes(u.protocol)?esc(u.href):"#";
+  }catch(e){
+    return "#";
+  }
 }
+
 function toggleSave(id){
-  saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];
+  saved=saved.includes(id)?
+    saved.filter(x=>x!==id):[...saved,id];
+
   localStorage.setItem("caHubSaved",JSON.stringify(saved));
-  render();renderSaved();
+
+  render();
+  renderSaved();
 }
+
 function renderSaved(){
-  const items=jobs.filter(j=>saved.includes(j.id||j.url||j.firm));
+  const items=jobs.filter(j=>
+    saved.includes(j.id||j.url||j.firm)
+  );
+
   document.getElementById("savedlist").innerHTML=items.length?
-    items.map(j=>`<p><strong>${esc(j.firm||j.title)}</strong> — ${esc(j.location||"")}</p>`).join(""):"Your saved opportunities will appear here.";
+    items.map(j=>`
+      <p>
+        <strong>${esc(j.firm||j.title)}</strong>
+        — ${esc(j.location||"")}
+      </p>
+    `).join(""):
+    "Your saved opportunities will appear here.";
 }
+
 loadJobs();
 </script>
 </body>
-  </html>
-  
+</html>
