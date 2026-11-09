@@ -22,6 +22,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Google News URL decoder
+        run: pip install googlenewsdecoder
+
       - name: Collect articleship opportunities
         run: python scripts/collect_jobs.py
 
@@ -29,8 +32,7 @@ jobs:
         run: |
           git config user.name "CA Articleship Hub Bot"
           git config user.email "actions@users.noreply.github.com"
-                    git add jobs.json
+          git add jobs.json
           git diff --cached --quiet || git commit -m "Update articleship opportunities"
           git pull --rebase origin main
           git push
-          
