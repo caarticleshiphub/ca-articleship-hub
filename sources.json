@@ -2,20 +2,44 @@
 {
   "sources": [
     {
-      "name": "Google News - CA Articleship",
+      "name": "Articleship Vacancy - India",
       "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+India&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Google News - Article Trainee",
-      "url": "https://news.google.com/rss/search?q=CA+article+trainee+vacancy+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Articleship Hiring - India",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+hiring+India&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Google News - Audit Articleship",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+audit+vacancy&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Article Assistant Jobs",
+      "url": "https://news.google.com/rss/search?q=CA+article+assistant+jobs+India&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Google News - Tax Articleship",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+tax+vacancy&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Article Trainee Recruitment",
+      "url": "https://news.google.com/rss/search?q=CA+article+trainee+recruitment+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Articles Required",
+      "url": "https://news.google.com/rss/search?q=CA+articles+required+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Articleship Openings",
+      "url": "https://news.google.com/rss/search?q=articleship+opening+chartered+accountant+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Audit Articleship",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+audit+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Tax Articleship",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+tax+India&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Articleship - Bengaluru",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+Bengaluru&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
+      "name": "Articleship - Kerala",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+Kerala&hl=en-IN&gl=IN&ceid=IN:en"
     }
   ]
 }
