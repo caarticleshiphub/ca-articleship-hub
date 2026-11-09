@@ -3,43 +3,43 @@
   "sources": [
     {
       "name": "Articleship Vacancy - India",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "url": "https://news.google.com/rss/search?q=%22CA+articleship+vacancy%22+India&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Articleship Hiring - India",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+hiring+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Articles Required - India",
+      "url": "https://news.google.com/rss/search?q=%22articles+required%22+CA+India&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Article Assistant Jobs",
-      "url": "https://news.google.com/rss/search?q=CA+article+assistant+jobs+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Article Assistant Required",
+      "url": "https://news.google.com/rss/search?q=%22article+assistant%22+required+CA&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Article Trainee Recruitment",
-      "url": "https://news.google.com/rss/search?q=CA+article+trainee+recruitment+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Articles Wanted",
+      "url": "https://news.google.com/rss/search?q=%22articles+wanted%22+CA+firm&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Articles Required",
-      "url": "https://news.google.com/rss/search?q=CA+articles+required+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "Articleship Immediate Joining",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+%22immediate+joining%22&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Articleship Openings",
-      "url": "https://news.google.com/rss/search?q=articleship+opening+chartered+accountant+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "LinkedIn Articleship Posts",
+      "url": "https://news.google.com/rss/search?q=site%3Alinkedin.com%2Fposts+CA+articleship+vacancy&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
-      "name": "Audit Articleship",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+audit+India&hl=en-IN&gl=IN&ceid=IN:en"
-    },
-    {
-      "name": "Tax Articleship",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+tax+India&hl=en-IN&gl=IN&ceid=IN:en"
+      "name": "LinkedIn Article Assistant Posts",
+      "url": "https://news.google.com/rss/search?q=site%3Alinkedin.com%2Fposts+%22article+assistant%22+CA+required&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
       "name": "Articleship - Bengaluru",
       "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+Bengaluru&hl=en-IN&gl=IN&ceid=IN:en"
     },
     {
+      "name": "Articleship - Mumbai and Delhi",
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+Mumbai+OR+Delhi&hl=en-IN&gl=IN&ceid=IN:en"
+    },
+    {
       "name": "Articleship - Kerala",
-      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+Kerala&hl=en-IN&gl=IN&ceid=IN:en"
+      "url": "https://news.google.com/rss/search?q=CA+articleship+vacancy+Kerala+OR+Kochi&hl=en-IN&gl=IN&ceid=IN:en"
     }
   ]
 }
