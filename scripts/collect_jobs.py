@@ -1,3 +1,4 @@
+
 import json
 import re
 import hashlib
@@ -26,18 +27,20 @@ EXCLUDE_TERMS = [
 ]
 
 CITIES = [
-    "Bengaluru", "Bangalore","Noida","Gurugram","Gurgaon",
-    "Ghaziabad","Borivali","Malad","Srinagar","Faridabad",
-    "Thane","Navi Mumbai", "Mumbai", "Delhi", "New Delhi",
+    "Bengaluru", "Bangalore", "Noida", "Gurugram", "Gurgaon",
+    "Ghaziabad", "Borivali", "Malad", "Srinagar", "Faridabad",
+    "Thane", "Navi Mumbai", "Mumbai", "Delhi", "New Delhi",
     "Chennai", "Hyderabad", "Pune", "Kolkata", "Kochi",
     "Cochin", "Kannur", "Calicut", "Kozhikode", "Thrissur",
     "Coimbatore", "Ahmedabad", "Jaipur", "Lucknow", "Indore",
     "Surat", "Nagpur", "Mysuru", "Mangalore", "Thiruvananthapuram"
 ]
 
+
 def clean(value):
     value = re.sub(r"<[^>]+>", " ", value or "")
     return re.sub(r"\s+", " ", unescape(value)).strip()
+
 
 def recent_date(value):
     if not value:
@@ -51,6 +54,7 @@ def recent_date(value):
     except Exception:
         return False
 
+
 def classify(text):
     text = text.lower()
     if "audit" in text:
@@ -63,12 +67,14 @@ def classify(text):
         return "Accounts"
     return "Articleship"
 
+
 def find_location(text):
     text_lower = text.lower()
     for city in CITIES:
         if city.lower() in text_lower:
             return city
     return "Not specified"
+
 
 def get_text(element, names):
     for name in names:
@@ -82,6 +88,7 @@ def get_text(element, names):
 
     return ""
 
+
 def fetch_feed(source):
     request = urllib.request.Request(
         source["url"],
@@ -91,7 +98,7 @@ def fetch_feed(source):
     with urllib.request.urlopen(request, timeout=30) as response:
         root = ET.fromstring(response.read())
 
-        items = [
+    items = [
         element for element in root.iter()
         if element.tag.split("}")[-1] in ("item", "entry")
     ]
@@ -134,7 +141,7 @@ def fetch_feed(source):
         ]):
             continue
 
-        # Require a recruitment signal in title or description.
+        # Require a recruitment signal.
         if not any(term in combined for term in RECRUITMENT_TERMS):
             continue
 
@@ -167,6 +174,7 @@ def fetch_feed(source):
 
     return results
 
+
 def main():
     with open(SOURCES_FILE, encoding="utf-8") as file:
         sources = json.load(file)["sources"]
@@ -179,7 +187,8 @@ def main():
         try:
             found = fetch_feed(source)
 
-                        for job in found:
+            # Remove duplicate vacancies using normalized titles.
+            for job in found:
                 duplicate_key = re.sub(
                     r"[^a-z0-9]",
                     "",
@@ -192,6 +201,7 @@ def main():
                     jobs[duplicate_key] = job
 
             successful += 1
+
             print(
                 f'{source["name"]}: '
                 f'{len(found)} possible vacancies'
@@ -214,6 +224,7 @@ def main():
         json.dump(output, file, indent=2, ensure_ascii=False)
 
     print(f'Total possible vacancies: {len(output["jobs"])}')
+
 
 if __name__ == "__main__":
     main()
