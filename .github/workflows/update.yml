@@ -23,7 +23,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install Google News URL decoder
-        run: pip install googlenewsdecoder
+        run: pip install googlenewsdecoder==0.2.2
 
       - name: Collect articleship opportunities
         run: python scripts/collect_jobs.py
