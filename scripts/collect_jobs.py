@@ -26,7 +26,9 @@ EXCLUDE_TERMS = [
 ]
 
 CITIES = [
-    "Bengaluru", "Bangalore", "Mumbai", "Delhi", "New Delhi",
+    "Bengaluru", "Bangalore","Noida","Gurugram","Gurgaon",
+    "Ghaziabad","Borivali","Malad","Srinagar","Faridabad",
+    "Thane","Navi Mumbai", "Mumbai", "Delhi", "New Delhi",
     "Chennai", "Hyderabad", "Pune", "Kolkata", "Kochi",
     "Cochin", "Kannur", "Calicut", "Kozhikode", "Thrissur",
     "Coimbatore", "Ahmedabad", "Jaipur", "Lucknow", "Indore",
