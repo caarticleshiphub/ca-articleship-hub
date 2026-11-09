@@ -1,12 +1,7 @@
 {
   "jobs": [],
-  "last_updated": "2026-11-09T07:44:35.019735+00:00",
-  "status": "All feeds failed",
-  "successful_feeds": 0,
-  "feed_errors": [
-    "Google News - CA Articleship: HTTP Error 503: Service Unavailable",
-    "Google News - Article Trainee: HTTP Error 503: Service Unavailable",
-    "Google News - Audit Articleship: HTTP Error 503: Service Unavailable",
-    "Google News - Tax Articleship: HTTP Error 503: Service Unavailable"
-  ]
+  "last_updated": "2026-11-09T13:29:54.539189+00:00",
+  "status": "Collection completed",
+  "successful_feeds": 4,
+  "feed_errors": []
 }
