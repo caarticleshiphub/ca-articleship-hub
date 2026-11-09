@@ -179,17 +179,17 @@ def main():
         try:
             found = fetch_feed(source)
 
-            for job in found:
-    duplicate_key = re.sub(
-        r"[^a-z0-9]",
-        "",
-        job["title"].lower()
-    )
+                        for job in found:
+                duplicate_key = re.sub(
+                    r"[^a-z0-9]",
+                    "",
+                    job["title"].lower()
+                )
 
-    duplicate_key = duplicate_key[:100]
+                duplicate_key = duplicate_key[:100]
 
-    if duplicate_key not in jobs:
-        jobs[duplicate_key] = job
+                if duplicate_key not in jobs:
+                    jobs[duplicate_key] = job
 
             successful += 1
             print(
