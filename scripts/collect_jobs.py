@@ -14,19 +14,24 @@ SOURCES_FILE = ROOT / "sources.json"
 JOBS_FILE = ROOT / "jobs.json"
 
 RECRUITMENT_TERMS = [
-    "articleship vacancy", "articleship opening",
-    "articleship openings", "articleship hiring",
-    "article trainee vacancy", "article trainee opening",
-    "article assistant vacancy", "articles required",
-    "articleship recruitment", "ca articles required",
-    "ca firm hiring", "chartered accountant articleship vacancy"
+    "vacancy", "vacancies", "hiring", "opening", "openings",
+    "recruitment", "required", "requirement", "job", "jobs",
+    "career", "careers", "walk-in", "walk in"
 ]
 
 EXCLUDE_TERMS = [
-    "exam", "result", "registration process", "study material",
-    "question paper", "syllabus", "mock test", "admit card",
-    "stipend rules", "how to become", "eligibility criteria",
-    "course details", "notification", "pw"
+    "exam result", "question paper", "study material",
+    "mock test", "admit card", "syllabus",
+    "how to become", "registration process",
+    "course details", "stipend rules"
+]
+
+CITIES = [
+    "Bengaluru", "Bangalore", "Mumbai", "Delhi", "New Delhi",
+    "Chennai", "Hyderabad", "Pune", "Kolkata", "Kochi",
+    "Cochin", "Kannur", "Calicut", "Kozhikode", "Thrissur",
+    "Coimbatore", "Ahmedabad", "Jaipur", "Lucknow", "Indore",
+    "Surat", "Nagpur", "Mysuru", "Mangalore", "Thiruvananthapuram"
 ]
 
 def clean(value):
@@ -41,7 +46,7 @@ def recent_date(value):
         if date.tzinfo is None:
             date = date.replace(tzinfo=timezone.utc)
         now = datetime.now(timezone.utc)
-        return now - timedelta(days=120) <= date <= now + timedelta(days=1)
+        return now - timedelta(days=180) <= date <= now + timedelta(days=1)
     except Exception:
         return False
 
@@ -53,34 +58,77 @@ def classify(text):
         return "GST"
     if "tax" in text:
         return "Taxation"
-    if "account" in text:
+    if "account" in text or "bookkeeping" in text:
         return "Accounts"
     return "Articleship"
+
+def find_location(text):
+    text_lower = text.lower()
+    for city in CITIES:
+        if city.lower() in text_lower:
+            return city
+    return "Not specified"
+
+def get_text(element, names):
+    for name in names:
+        found = element.find(name)
+        if found is not None and found.text:
+            return clean(found.text)
+
+    for child in element:
+        if child.tag.split("}")[-1] in names and child.text:
+            return clean(child.text)
+
+    return ""
 
 def fetch_feed(source):
     request = urllib.request.Request(
         source["url"],
-        headers={"User-Agent": "CAArticleshipHub/1.0"}
+        headers={"User-Agent": "Mozilla/5.0 CAArticleshipHub/2.0"}
     )
-    with urllib.request.urlopen(request, timeout=25) as response:
+
+    with urllib.request.urlopen(request, timeout=30) as response:
         root = ET.fromstring(response.read())
+
+    items = [
+        element for element in root.iter()
+        if element.tag.split("}")[-1] in ("item", "entry")
+    ]
 
     results = []
 
-    for item in root.findall(".//item"):
-        title = clean(item.findtext("title"))
-        link = clean(item.findtext("link"))
-        description = clean(item.findtext("description"))
-        pub_date = clean(item.findtext("pubDate"))
+    for item in items:
+        title = get_text(item, ["title"])
+        description = get_text(
+            item, ["description", "summary", "content"]
+        )
+        link = get_text(item, ["link"])
+        pub_date = get_text(
+            item, ["pubDate", "published", "updated"]
+        )
+
+        # Atom feeds may store the link in an href attribute.
+        if not link:
+            for child in item:
+                if child.tag.split("}")[-1] == "link":
+                    link = child.attrib.get("href", "")
+                    if link:
+                        break
 
         title_lower = title.lower()
         combined = (title + " " + description).lower()
 
-        # Recruitment signal must appear in the headline.
-        if not any(term in title_lower for term in RECRUITMENT_TERMS):
+        # Require articleship-related content.
+        if not any(term in combined for term in [
+            "articleship", "article trainee",
+            "article assistant", "ca articles"
+        ]):
             continue
 
-        # Reject educational and informational content.
+        # Require a recruitment signal in title or description.
+        if not any(term in combined for term in RECRUITMENT_TERMS):
+            continue
+
         if any(term in title_lower for term in EXCLUDE_TERMS):
             continue
 
@@ -98,7 +146,7 @@ def fetch_feed(source):
             "id": identifier,
             "title": title,
             "firm": "Verify with original source",
-            "location": "Not specified",
+            "location": find_location(combined),
             "area": classify(combined),
             "stipend": "",
             "date": pub_date,
@@ -114,7 +162,6 @@ def main():
     with open(SOURCES_FILE, encoding="utf-8") as file:
         sources = json.load(file)["sources"]
 
-    # Start fresh so old irrelevant results are removed.
     jobs = {}
     successful = 0
     errors = []
@@ -122,10 +169,16 @@ def main():
     for source in sources:
         try:
             found = fetch_feed(source)
+
             for job in found:
                 jobs[job["id"]] = job
+
             successful += 1
-            print(f'{source["name"]}: {len(found)} possible vacancies')
+            print(
+                f'{source["name"]}: '
+                f'{len(found)} possible vacancies'
+            )
+
         except Exception as error:
             errors.append(f'{source["name"]}: {error}')
             print(f'Feed failed: {source["name"]}: {error}')
@@ -135,6 +188,7 @@ def main():
         "last_updated": datetime.now(timezone.utc).isoformat(),
         "status": "Collection completed" if successful else "All feeds failed",
         "successful_feeds": successful,
+        "total_sources": len(sources),
         "feed_errors": errors
     }
 
@@ -145,4 +199,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
