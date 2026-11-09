@@ -5,11 +5,15 @@ import hashlib
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
+
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from html import unescape
 from urllib.parse import urlparse
+
+from googlenewsdecoder import gnewsdecoder
+
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES_FILE = ROOT / "sources.json"
@@ -107,32 +111,44 @@ def get_text(element, names):
 
 
 def resolve_link(link):
-    """Follow HTTP redirects when Google News exposes a destination URL."""
+    """
+    Decode Google News links to their original article URLs.
+    If decoding fails, retain the original link.
+    """
 
     if not link.startswith(("https://", "http://")):
         return link
 
     hostname = urlparse(link).hostname or ""
 
-    if "news.google.com" not in hostname:
+    if not (
+        hostname == "news.google.com"
+        or hostname.endswith(".news.google.com")
+    ):
         return link
 
-    request = urllib.request.Request(
-        link,
-        headers={"User-Agent": USER_AGENT}
-    )
-
     try:
-        with urllib.request.urlopen(request, timeout=15) as response:
-            final_url = response.geturl()
+        result = gnewsdecoder(
+            link,
+            interval=1,
+            timeout=15
+        )
 
-            final_host = urlparse(final_url).hostname or ""
+        if (
+            isinstance(result, dict)
+            and result.get("success")
+            and result.get("decoded_url")
+        ):
+            original_url = result["decoded_url"]
 
-            if final_host and "news.google.com" not in final_host:
-                return final_url
+            if original_url.startswith(("https://", "http://")):
+                print("Google News link decoded successfully.")
+                return original_url
+
+        print("Google News decoder could not extract the original URL.")
 
     except Exception as error:
-        print(f"Link resolution unavailable: {error}")
+        print(f"Google News decoding failed: {error}")
 
     return link
 
