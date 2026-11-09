@@ -3,15 +3,19 @@ import json
 import re
 import hashlib
 import urllib.request
+import urllib.error
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from html import unescape
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES_FILE = ROOT / "sources.json"
 JOBS_FILE = ROOT / "jobs.json"
+
+USER_AGENT = "Mozilla/5.0 CAArticleshipHub/3.0"
 
 RECRUITMENT_TERMS = [
     "vacancy", "vacancies", "hiring", "opening", "openings",
@@ -24,6 +28,11 @@ EXCLUDE_TERMS = [
     "mock test", "admit card", "syllabus",
     "how to become", "registration process",
     "course details", "stipend rules"
+]
+
+ARTICLESIP_TERMS = [
+    "articleship", "article trainee",
+    "article assistant", "ca articles"
 ]
 
 CITIES = [
@@ -45,18 +54,24 @@ def clean(value):
 def recent_date(value):
     if not value:
         return False
+
     try:
         date = parsedate_to_datetime(value)
+
         if date.tzinfo is None:
             date = date.replace(tzinfo=timezone.utc)
+
         now = datetime.now(timezone.utc)
+
         return now - timedelta(days=180) <= date <= now + timedelta(days=1)
+
     except Exception:
         return False
 
 
 def classify(text):
     text = text.lower()
+
     if "audit" in text:
         return "Audit"
     if "gst" in text:
@@ -65,34 +80,67 @@ def classify(text):
         return "Taxation"
     if "account" in text or "bookkeeping" in text:
         return "Accounts"
+
     return "Articleship"
 
 
 def find_location(text):
     text_lower = text.lower()
+
     for city in CITIES:
         if city.lower() in text_lower:
             return city
+
     return "Not specified"
 
 
 def get_text(element, names):
-    for name in names:
-        found = element.find(name)
-        if found is not None and found.text:
-            return clean(found.text)
-
     for child in element:
-        if child.tag.split("}")[-1] in names and child.text:
-            return clean(child.text)
+        if child.tag.split("}")[-1] in names:
+            if child.text:
+                return clean(child.text)
+
+            if child.attrib.get("href"):
+                return child.attrib["href"]
 
     return ""
+
+
+def resolve_link(link):
+    """Follow HTTP redirects when Google News exposes a destination URL."""
+
+    if not link.startswith(("https://", "http://")):
+        return link
+
+    hostname = urlparse(link).hostname or ""
+
+    if "news.google.com" not in hostname:
+        return link
+
+    request = urllib.request.Request(
+        link,
+        headers={"User-Agent": USER_AGENT}
+    )
+
+    try:
+        with urllib.request.urlopen(request, timeout=15) as response:
+            final_url = response.geturl()
+
+            final_host = urlparse(final_url).hostname or ""
+
+            if final_host and "news.google.com" not in final_host:
+                return final_url
+
+    except Exception as error:
+        print(f"Link resolution unavailable: {error}")
+
+    return link
 
 
 def fetch_feed(source):
     request = urllib.request.Request(
         source["url"],
-        headers={"User-Agent": "Mozilla/5.0 CAArticleshipHub/2.0"}
+        headers={"User-Agent": USER_AGENT}
     )
 
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -105,43 +153,27 @@ def fetch_feed(source):
 
     print(f'{source["name"]}: Raw feed entries = {len(items)}')
 
-    for item in items[:5]:
-        title = get_text(item, ["title"])
-        pub_date = get_text(item, ["pubDate", "published", "updated"])
-        print(f"DEBUG TITLE: {title}")
-        print(f"DEBUG DATE: {pub_date}")
-
     results = []
 
     for item in items:
         title = get_text(item, ["title"])
+
         description = get_text(
             item, ["description", "summary", "content"]
         )
+
         link = get_text(item, ["link"])
+
         pub_date = get_text(
             item, ["pubDate", "published", "updated"]
         )
 
-        # Atom feeds may store the link in an href attribute.
-        if not link:
-            for child in item:
-                if child.tag.split("}")[-1] == "link":
-                    link = child.attrib.get("href", "")
-                    if link:
-                        break
-
         title_lower = title.lower()
         combined = (title + " " + description).lower()
 
-        # Require articleship-related content.
-        if not any(term in combined for term in [
-            "articleship", "article trainee",
-            "article assistant", "ca articles"
-        ]):
+        if not any(term in combined for term in ARTICLESIP_TERMS):
             continue
 
-        # Require a recruitment signal.
         if not any(term in combined for term in RECRUITMENT_TERMS):
             continue
 
@@ -154,8 +186,10 @@ def fetch_feed(source):
         if not link.startswith(("https://", "http://")):
             continue
 
+        original_link = resolve_link(link)
+
         identifier = hashlib.sha256(
-            link.encode("utf-8")
+            original_link.encode("utf-8")
         ).hexdigest()[:16]
 
         results.append({
@@ -168,7 +202,7 @@ def fetch_feed(source):
             "date": pub_date,
             "summary": description[:500],
             "source": source["name"],
-            "url": link,
+            "url": original_link,
             "verification": "Unverified - check original listing"
         })
 
@@ -187,7 +221,6 @@ def main():
         try:
             found = fetch_feed(source)
 
-            # Remove duplicate vacancies using normalized titles.
             for job in found:
                 duplicate_key = re.sub(
                     r"[^a-z0-9]",
