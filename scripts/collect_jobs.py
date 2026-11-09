@@ -3,7 +3,6 @@ import json
 import re
 import hashlib
 import urllib.request
-import urllib.error
 import xml.etree.ElementTree as ET
 
 from pathlib import Path
@@ -19,12 +18,12 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCES_FILE = ROOT / "sources.json"
 JOBS_FILE = ROOT / "jobs.json"
 
-USER_AGENT = "Mozilla/5.0 CAArticleshipHub/3.0"
+USER_AGENT = "Mozilla/5.0 CAArticleshipHub/4.0"
 
 RECRUITMENT_TERMS = [
     "vacancy", "vacancies", "hiring", "opening", "openings",
     "recruitment", "required", "requirement", "job", "jobs",
-    "career", "careers", "walk-in", "walk in"
+    "career", "careers", "walk-in", "walk in", "looking for"
 ]
 
 EXCLUDE_TERMS = [
@@ -36,23 +35,57 @@ EXCLUDE_TERMS = [
 
 ARTICLESIP_TERMS = [
     "articleship", "article trainee",
-    "article assistant", "ca articles"
+    "article assistant", "ca articles",
+    "articles required", "articles wanted"
 ]
 
-CITIES = [
-    "Bengaluru", "Bangalore", "Noida", "Gurugram", "Gurgaon",
-    "Ghaziabad", "Borivali", "Malad", "Srinagar", "Faridabad",
-    "Thane", "Navi Mumbai", "Mumbai", "Delhi", "New Delhi",
-    "Chennai", "Hyderabad", "Pune", "Kolkata", "Kochi",
-    "Cochin", "Kannur", "Calicut", "Kozhikode", "Thrissur",
-    "Coimbatore", "Ahmedabad", "Jaipur", "Lucknow", "Indore",
-    "Surat", "Nagpur", "Mysuru", "Mangalore", "Thiruvananthapuram"
-]
+CITY_ALIASES = {
+    "Bengaluru": ["bengaluru", "bangalore"],
+    "Mumbai": ["mumbai"],
+    "Delhi": ["delhi", "new delhi"],
+    "Noida": ["noida"],
+    "Gurugram": ["gurugram", "gurgaon"],
+    "Ghaziabad": ["ghaziabad"],
+    "Faridabad": ["faridabad"],
+    "Chennai": ["chennai"],
+    "Hyderabad": ["hyderabad"],
+    "Pune": ["pune"],
+    "Kolkata": ["kolkata"],
+    "Ahmedabad": ["ahmedabad"],
+    "Jaipur": ["jaipur"],
+    "Lucknow": ["lucknow"],
+    "Indore": ["indore"],
+    "Surat": ["surat"],
+    "Nagpur": ["nagpur"],
+    "Mysuru": ["mysuru", "mysore"],
+    "Mangalore": ["mangalore", "mangaluru"],
+    "Kochi": ["kochi", "cochin"],
+    "Kannur": ["kannur"],
+    "Kozhikode": ["kozhikode", "calicut"],
+    "Thrissur": ["thrissur"],
+    "Coimbatore": ["coimbatore"],
+    "Thiruvananthapuram": [
+        "thiruvananthapuram", "trivandrum"
+    ],
+    "Borivali": ["borivali"],
+    "Malad": ["malad"],
+    "Thane": ["thane"],
+    "Navi Mumbai": ["navi mumbai"],
+    "Srinagar": ["srinagar"]
+}
 
 
 def clean(value):
-    value = re.sub(r"<[^>]+>", " ", value or "")
-    return re.sub(r"\s+", " ", unescape(value)).strip()
+    value = unescape(value or "")
+    value = re.sub(
+        r"<(script|style).*?>.*?</\1>",
+        " ",
+        value,
+        flags=re.I | re.S
+    )
+    value = re.sub(r"<[^>]+>", " ", value)
+    value = re.sub(r"\s+", " ", value)
+    return value.strip()
 
 
 def recent_date(value):
@@ -73,34 +106,11 @@ def recent_date(value):
         return False
 
 
-def classify(text):
-    text = text.lower()
-
-    if "audit" in text:
-        return "Audit"
-    if "gst" in text:
-        return "GST"
-    if "tax" in text:
-        return "Taxation"
-    if "account" in text or "bookkeeping" in text:
-        return "Accounts"
-
-    return "Articleship"
-
-
-def find_location(text):
-    text_lower = text.lower()
-
-    for city in CITIES:
-        if city.lower() in text_lower:
-            return city
-
-    return "Not specified"
-
-
 def get_text(element, names):
     for child in element:
-        if child.tag.split("}")[-1] in names:
+        tag = child.tag.split("}")[-1]
+
+        if tag in names:
             if child.text:
                 return clean(child.text)
 
@@ -111,10 +121,7 @@ def get_text(element, names):
 
 
 def resolve_link(link):
-    """
-    Decode Google News links to their original article URLs.
-    If decoding fails, retain the original link.
-    """
+    """Decode Google News links while retaining the original fallback."""
 
     if not link.startswith(("https://", "http://")):
         return link
@@ -128,11 +135,7 @@ def resolve_link(link):
         return link
 
     try:
-        result = gnewsdecoder(
-            link,
-            interval=1,
-            timeout=15
-        )
+        result = gnewsdecoder(link, interval=1, timeout=15)
 
         if (
             isinstance(result, dict)
@@ -151,6 +154,204 @@ def resolve_link(link):
         print(f"Google News decoding failed: {error}")
 
     return link
+
+
+def find_locations(text):
+    text_lower = text.lower()
+    found = []
+
+    for city, aliases in CITY_ALIASES.items():
+        if any(
+            re.search(r"\b" + re.escape(alias) + r"\b", text_lower)
+            for alias in aliases
+        ):
+            found.append(city)
+
+    # Keep the result unique and preserve the defined city order.
+    return found
+
+
+def extract_stipend(text):
+    patterns = [
+        r"(?:₹|rs\.?|inr)\s*[\d,]+(?:\s*[-–to]+\s*(?:₹|rs\.?|inr)?\s*[\d,]+)?(?:\s*(?:per month|/month|monthly|p\.m\.))?",
+        r"[\d,]+\s*(?:to|[-–])\s*[\d,]+\s*(?:per month|/month|monthly|p\.m\.)"
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text, re.I)
+
+        if match:
+            return clean(match.group(0))
+
+    return ""
+
+
+def extract_role(text):
+    patterns = [
+        r"\b(article trainee|article assistant|articleship trainee)\b",
+        r"\b(ca articleship|articleship)\b"
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text, re.I)
+
+        if match:
+            return match.group(0).title()
+
+    return "CA Articleship"
+
+
+def extract_firm(title):
+    """
+    Conservative title-based extraction.
+    If a reliable firm name cannot be identified, do not guess.
+    """
+
+    value = clean(title)
+
+    value = re.sub(
+        r"\s*[-|–]\s*(LinkedIn|Google News).*$",
+        "",
+        value,
+        flags=re.I
+    )
+
+    separators = [
+        " - CA Articleship",
+        " | CA Articleship",
+        " - Articleship",
+        " | Articleship",
+        " hiring",
+        " is hiring",
+        " invites applications",
+        " vacancy",
+        " vacancies",
+        " articles required",
+        " article trainee"
+    ]
+
+    lower_value = value.lower()
+
+    for separator in separators:
+        position = lower_value.find(separator)
+
+        if position > 0:
+            value = value[:position].strip()
+            break
+
+    value = re.sub(r"^(ca articleship vacancy|articleship vacancy)\s*[-:|]?\s*", "", value, flags=re.I)
+    value = value.strip(" -|:–")
+
+    generic = [
+        "ca articleship", "articleship vacancy",
+        "article trainee", "article assistant",
+        "articles required", "articles wanted"
+    ]
+
+    if not value or value.lower() in generic:
+        return "Verify with original source"
+
+    if len(value) > 90:
+        return "Verify with original source"
+
+    return value
+
+
+def classify(text):
+    text = text.lower()
+
+    # Specific department terms are checked before general terms.
+    if re.search(r"\b(gst|goods and services tax|indirect tax)\b", text):
+        return "GST"
+
+    if re.search(r"\b(internal audit|statutory audit|tax audit|audit and assurance|auditing)\b", text):
+        return "Audit"
+
+    if re.search(r"\b(direct tax|income tax|taxation|tax compliance|tax representation)\b", text):
+        return "Taxation"
+
+    if re.search(r"\b(bookkeeping|accounting|accounts department|financial accounting)\b", text):
+        return "Accounts"
+
+    if re.search(r"\b(financial management|finance|investment banking)\b", text):
+        return "Finance"
+
+    return "General Articleship"
+
+
+def extract_exposure(text):
+    text_lower = text.lower()
+
+    departments = {
+        "Audit": [
+            "audit", "auditing", "assurance"
+        ],
+        "Taxation": [
+            "taxation", "income tax", "direct tax", "tax audit"
+        ],
+        "GST": [
+            "gst", "indirect tax"
+        ],
+        "Accounts": [
+            "accounting", "accounts", "bookkeeping"
+        ],
+        "Finance": [
+            "finance", "financial management", "investment banking"
+        ],
+        "Company Law": [
+            "company law", "roc", "corporate law"
+        ],
+        "Bank Audit": [
+            "bank audit", "banking audit"
+        ]
+    }
+
+    found = []
+
+    for department, keywords in departments.items():
+        if any(keyword in text_lower for keyword in keywords):
+            found.append(department)
+
+    return found
+
+
+def extract_summary(description, title):
+    summary = clean(description)
+
+    if not summary or summary.lower() == title.lower():
+        return "Open the original listing to check vacancy details."
+
+    if len(summary) > 700:
+        summary = summary[:697].rsplit(" ", 1)[0] + "..."
+
+    return summary
+
+
+def make_duplicate_key(job):
+    url = job.get("url", "").lower().rstrip("/")
+
+    if url and "news.google.com" not in url:
+        return hashlib.sha256(url.encode("utf-8")).hexdigest()
+
+    title = re.sub(
+        r"[^a-z0-9]",
+        "",
+        job.get("title", "").lower()
+    )
+
+    firm = re.sub(
+        r"[^a-z0-9]",
+        "",
+        job.get("firm", "").lower()
+    )
+
+    location = ",".join(job.get("locations", []))
+
+    combined = title[:120] + firm + location
+
+    return hashlib.sha256(
+        combined.encode("utf-8")
+    ).hexdigest()
 
 
 def fetch_feed(source):
@@ -184,13 +385,14 @@ def fetch_feed(source):
             item, ["pubDate", "published", "updated"]
         )
 
+        combined = clean(title + " " + description)
+        combined_lower = combined.lower()
         title_lower = title.lower()
-        combined = (title + " " + description).lower()
 
-        if not any(term in combined for term in ARTICLESIP_TERMS):
+        if not any(term in combined_lower for term in ARTICLESIP_TERMS):
             continue
 
-        if not any(term in combined for term in RECRUITMENT_TERMS):
+        if not any(term in combined_lower for term in RECRUITMENT_TERMS):
             continue
 
         if any(term in title_lower for term in EXCLUDE_TERMS):
@@ -204,23 +406,30 @@ def fetch_feed(source):
 
         original_link = resolve_link(link)
 
-        identifier = hashlib.sha256(
-            original_link.encode("utf-8")
-        ).hexdigest()[:16]
+        locations = find_locations(combined)
 
-        results.append({
-            "id": identifier,
+        job = {
+            "id": hashlib.sha256(
+                original_link.encode("utf-8")
+            ).hexdigest()[:16],
+
             "title": title,
-            "firm": "Verify with original source",
-            "location": find_location(combined),
+            "firm": extract_firm(title),
+            "role": extract_role(combined),
+            "location": ", ".join(locations) if locations else "Not specified",
+            "locations": locations,
             "area": classify(combined),
-            "stipend": "",
+            "department": extract_exposure(combined),
+            "exposure": extract_exposure(combined),
+            "stipend": extract_stipend(combined),
             "date": pub_date,
-            "summary": description[:500],
+            "summary": extract_summary(description, title),
             "source": source["name"],
             "url": original_link,
             "verification": "Unverified - check original listing"
-        })
+        }
+
+        results.append(job)
 
     return results
 
@@ -238,13 +447,7 @@ def main():
             found = fetch_feed(source)
 
             for job in found:
-                duplicate_key = re.sub(
-                    r"[^a-z0-9]",
-                    "",
-                    job["title"].lower()
-                )
-
-                duplicate_key = duplicate_key[:100]
+                duplicate_key = make_duplicate_key(job)
 
                 if duplicate_key not in jobs:
                     jobs[duplicate_key] = job
@@ -260,8 +463,18 @@ def main():
             errors.append(f'{source["name"]}: {error}')
             print(f'Feed failed: {source["name"]}: {error}')
 
+    all_jobs = list(jobs.values())
+
+    all_jobs.sort(
+        key=lambda job: (
+            parsedate_to_datetime(job["date"]).timestamp()
+            if job.get("date") else 0
+        ),
+        reverse=True
+    )
+
     output = {
-        "jobs": list(jobs.values())[-500:],
+        "jobs": all_jobs[:500],
         "last_updated": datetime.now(timezone.utc).isoformat(),
         "status": "Collection completed" if successful else "All feeds failed",
         "successful_feeds": successful,
