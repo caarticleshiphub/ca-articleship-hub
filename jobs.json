@@ -1,24 +1,51 @@
 {
   "jobs": [
     {
-      "id": "c18283aad601cd42",
-      "title": "BDO Ahmedabad – CA Articleship Vacancy | Fincom Nexus - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Ahmedabad",
-      "area": "Articleship",
+      "id": "a1452c7044ac1c11",
+      "title": "We Are Hiring: Article Assistants at Zinzuwadia & Co., Chartered Accountants An Exciting Opportunity for CA Students Zinzuwadia & Co. is inviting applications for the position of Article Assistant. This is an excellent opportunity for CA students who wish to gain - LinkedIn",
+      "firm": "We Are",
+      "role": "Article Assistant",
+      "location": "Not specified",
+      "locations": [],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
       "stipend": "",
-      "date": "Tue, 03 Nov 2026 10:30:24 GMT",
-      "summary": "BDO Ahmedabad – CA Articleship Vacancy | Fincom Nexus LinkedIn",
+      "date": "Thu, 05 Nov 2026 07:18:39 GMT",
+      "summary": "We Are Hiring: Article Assistants at Zinzuwadia & Co., Chartered Accountants An Exciting Opportunity for CA Students Zinzuwadia & Co. is inviting applications for the position of Article Assistant. This is an excellent opportunity for CA students who wish to gain LinkedIn",
+      "source": "LinkedIn Article Assistant Posts",
+      "url": "https://www.linkedin.com/posts/zinzuwadia-and-co-383645315_we-are-hiring-article-assistants-at-zinzuwadia-activity-7524007258817654784-aRXZ",
+      "verification": "Unverified - check original listing"
+    },
+    {
+      "id": "4758b190f2a731a4",
+      "title": "*New Vacancy Alert!* 📌 *VACANCY OPEN – CA ARTICLESHIP* 🚨 *VACANCY OPEN – CA ARTICLESHIP* 🚨 Join *S & N CO* and build your career with practical exposure across multiple domains. 📌 *Open Position:* CA Article Assistant 📍 *Location:* Borival - LinkedIn",
+      "firm": "*New",
+      "role": "Article Assistant",
+      "location": "Not specified",
+      "locations": [],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
+      "stipend": "",
+      "date": "Wed, 04 Nov 2026 10:27:55 GMT",
+      "summary": "*New Vacancy Alert!* 📌 *VACANCY OPEN – CA ARTICLESHIP* 🚨 *VACANCY OPEN – CA ARTICLESHIP* 🚨 Join *S & N CO* and build your career with practical exposure across multiple domains. 📌 *Open Position:* CA Article Assistant 📍 *Location:* Borival LinkedIn",
       "source": "LinkedIn Articleship Posts",
-      "url": "https://www.linkedin.com/posts/sjandcompany_bdo-ahmedabad-ca-articleship-vacancy-activity-7523330736997838848-Ze7Z",
+      "url": "https://www.linkedin.com/posts/fincom-nexus_new-vacancy-alert-vacancy-open-activity-7523692498318241792-pTjy",
       "verification": "Unverified - check original listing"
     },
     {
       "id": "5f0bc5965170cd63",
       "title": "*New Vacancy Alert!* 📌 *CA ARTICLESHIP VACANCY - 6 POSITIONS * CA ARTICLESHIP VACANCY - 6 POSITIONS Goyal Malhotra & Associates D-64, Sector 55, Noida We invite applications from enthusiastic CA students for Articleship at Goyal Malhotra & - LinkedIn",
-      "firm": "Verify with original source",
+      "firm": "*New",
+      "role": "Ca Articleship",
       "location": "Noida",
-      "area": "Articleship",
+      "locations": [
+        "Noida"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
       "stipend": "",
       "date": "Wed, 04 Nov 2026 10:27:36 GMT",
       "summary": "*New Vacancy Alert!* 📌 *CA ARTICLESHIP VACANCY - 6 POSITIONS * CA ARTICLESHIP VACANCY - 6 POSITIONS Goyal Malhotra & Associates D-64, Sector 55, Noida We invite applications from enthusiastic CA students for Articleship at Goyal Malhotra & LinkedIn",
@@ -27,24 +54,21 @@
       "verification": "Unverified - check original listing"
     },
     {
-      "id": "d338af536cf6095c",
-      "title": "*New Vacancy Alert!* 📌 *CA Articleship – Capital Market Compliance* Company Name : Sanjay Shah & Co LLP – Chartered Accountants Location : Malad (West), Mumbai Qualification : CA Intermediate Job Title : CA Articleship – Capital Market Compliance R - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Malad",
-      "area": "Accounts",
-      "stipend": "",
-      "date": "Mon, 02 Nov 2026 09:16:40 GMT",
-      "summary": "*New Vacancy Alert!* 📌 *CA Articleship – Capital Market Compliance* Company Name : Sanjay Shah & Co LLP – Chartered Accountants Location : Malad (West), Mumbai Qualification : CA Intermediate Job Title : CA Articleship – Capital Market Compliance R LinkedIn",
-      "source": "LinkedIn Articleship Posts",
-      "url": "https://www.linkedin.com/posts/fincom-nexus_new-vacancy-alert-ca-articleship-activity-7522949793816530944-nPqX",
-      "verification": "Unverified - check original listing"
-    },
-    {
       "id": "059979dd5fb9eae9",
       "title": "*New Vacancy Alert!* 📌 *CA ARTICLESHIP VACANCY – KOLKATA* 🚨 CA ARTICLESHIP VACANCY – KOLKATA 🚨 🏢 Firm: DHC | Desai Haribhakti 📍 Location: Kolkata 💼 Role: Article Trainee 📊 Domain: Corporate Finance Advisory Services (CFAS) 🔹 Exposu - LinkedIn",
-      "firm": "Verify with original source",
+      "firm": "*New",
+      "role": "Article Trainee",
       "location": "Kolkata",
-      "area": "Articleship",
+      "locations": [
+        "Kolkata"
+      ],
+      "area": "Finance",
+      "department": [
+        "Finance"
+      ],
+      "exposure": [
+        "Finance"
+      ],
       "stipend": "",
       "date": "Wed, 04 Nov 2026 10:27:16 GMT",
       "summary": "*New Vacancy Alert!* 📌 *CA ARTICLESHIP VACANCY – KOLKATA* 🚨 CA ARTICLESHIP VACANCY – KOLKATA 🚨 🏢 Firm: DHC | Desai Haribhakti 📍 Location: Kolkata 💼 Role: Article Trainee 📊 Domain: Corporate Finance Advisory Services (CFAS) 🔹 Exposu LinkedIn",
@@ -55,9 +79,22 @@
     {
       "id": "7d81e137b03731f9",
       "title": "*New Vacancy Alert!* 📌 *CA ARTICLESHIP VACANCY | RSM INDIA* 📢 CA ARTICLESHIP VACANCY | RSM INDIA RSM India is inviting applications for CA Articleship in Indirect Tax (GST) at Noida & Gurugram. 📌 Exposure: - GST Compliance & Advisory - GS - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Noida",
+      "firm": "*New",
+      "role": "Ca Articleship",
+      "location": "Noida, Gurugram",
+      "locations": [
+        "Noida",
+        "Gurugram"
+      ],
       "area": "GST",
+      "department": [
+        "Taxation",
+        "GST"
+      ],
+      "exposure": [
+        "Taxation",
+        "GST"
+      ],
       "stipend": "",
       "date": "Wed, 04 Nov 2026 10:27:06 GMT",
       "summary": "*New Vacancy Alert!* 📌 *CA ARTICLESHIP VACANCY | RSM INDIA* 📢 CA ARTICLESHIP VACANCY | RSM INDIA RSM India is inviting applications for CA Articleship in Indirect Tax (GST) at Noida & Gurugram. 📌 Exposure: - GST Compliance & Advisory - GS LinkedIn",
@@ -66,11 +103,44 @@
       "verification": "Unverified - check original listing"
     },
     {
+      "id": "ab570536ef8e0f87",
+      "title": "We're Hiring | Article Assistants | Brahmayya & Co — Delhi (Bhikaji Cama Place) ✅ Eligibility Criteria · CA Intermediate — Both Groups cleared · ITT & Orientation Programme (ICAI) completed 📌 What you'll work on · Statutory Audit & Assurance (listed and unlis - LinkedIn",
+      "firm": "We're",
+      "role": "CA Articleship",
+      "location": "Delhi",
+      "locations": [
+        "Delhi"
+      ],
+      "area": "Audit",
+      "department": [
+        "Audit"
+      ],
+      "exposure": [
+        "Audit"
+      ],
+      "stipend": "",
+      "date": "Wed, 04 Nov 2026 07:11:06 GMT",
+      "summary": "We're Hiring | Article Assistants | Brahmayya & Co — Delhi (Bhikaji Cama Place) ✅ Eligibility Criteria · CA Intermediate — Both Groups cleared · ITT & Orientation Programme (ICAI) completed 📌 What you'll work on · Statutory Audit & Assurance (listed and unlis LinkedIn",
+      "source": "LinkedIn Article Assistant Posts",
+      "url": "https://www.linkedin.com/posts/brahmayya_were-hiring-article-assistants-brahmayya-activity-7523642970869248000-4m4Y",
+      "verification": "Unverified - check original listing"
+    },
+    {
       "id": "ce8dad9aeff6413d",
       "title": "CA ARTICLESHIP VACANCY - 6 POSITIONS Goyal Malhotra & Associates D-64, Sector 55, Noida Key Areas of Exposure 1. Statutory Audits of Indian Companies, MNCs and Large Corporate Groups. 2. Ind AS-based Financial Reporting and Audit. 3. Audit of - LinkedIn",
       "firm": "Verify with original source",
+      "role": "Ca Articleship",
       "location": "Noida",
-      "area": "Audit",
+      "locations": [
+        "Noida"
+      ],
+      "area": "General Articleship",
+      "department": [
+        "Audit"
+      ],
+      "exposure": [
+        "Audit"
+      ],
       "stipend": "",
       "date": "Tue, 03 Nov 2026 16:26:59 GMT",
       "summary": "CA ARTICLESHIP VACANCY - 6 POSITIONS Goyal Malhotra & Associates D-64, Sector 55, Noida Key Areas of Exposure 1. Statutory Audits of Indian Companies, MNCs and Large Corporate Groups. 2. Ind AS-based Financial Reporting and Audit. 3. Audit of LinkedIn",
@@ -79,102 +149,36 @@
       "verification": "Unverified - check original listing"
     },
     {
-      "id": "4758b190f2a731a4",
-      "title": "*New Vacancy Alert!* 📌 *VACANCY OPEN – CA ARTICLESHIP* 🚨 *VACANCY OPEN – CA ARTICLESHIP* 🚨 Join *S & N CO* and build your career with practical exposure across multiple domains. 📌 *Open Position:* CA Article Assistant 📍 *Location:* Borival - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Not specified",
-      "area": "Articleship",
+      "id": "c18283aad601cd42",
+      "title": "BDO Ahmedabad – CA Articleship Vacancy | Fincom Nexus - LinkedIn",
+      "firm": "BDO Ahmedabad – CA Articleship",
+      "role": "Ca Articleship",
+      "location": "Ahmedabad",
+      "locations": [
+        "Ahmedabad"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
       "stipend": "",
-      "date": "Wed, 04 Nov 2026 10:27:55 GMT",
-      "summary": "*New Vacancy Alert!* 📌 *VACANCY OPEN – CA ARTICLESHIP* 🚨 *VACANCY OPEN – CA ARTICLESHIP* 🚨 Join *S & N CO* and build your career with practical exposure across multiple domains. 📌 *Open Position:* CA Article Assistant 📍 *Location:* Borival LinkedIn",
+      "date": "Tue, 03 Nov 2026 10:30:24 GMT",
+      "summary": "BDO Ahmedabad – CA Articleship Vacancy | Fincom Nexus LinkedIn",
       "source": "LinkedIn Articleship Posts",
-      "url": "https://www.linkedin.com/posts/fincom-nexus_new-vacancy-alert-vacancy-open-activity-7523692498318241792-pTjy",
-      "verification": "Unverified - check original listing"
-    },
-    {
-      "id": "cd7ca85d67fa11db",
-      "title": "Deloitte Articleship Vacancy Openings 🚀 Following are the available locations along with their respective Job IDs: • Mumbai — 107772 • Delhi — 107616 • Bangalore — 107764 • Hyderabad — 107765 • Chennai — 107768 • Kochi — 107767 • Coimbatore — - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Bangalore",
-      "area": "Articleship",
-      "stipend": "",
-      "date": "Sat, 27 Jun 2026 07:00:00 GMT",
-      "summary": "Deloitte Articleship Vacancy Openings 🚀 Following are the available locations along with their respective Job IDs: • Mumbai — 107772 • Delhi — 107616 • Bangalore — 107764 • Hyderabad — 107765 • Chennai — 107768 • Kochi — 107767 • Coimbatore — LinkedIn",
-      "source": "LinkedIn Articleship Posts",
-      "url": "https://www.linkedin.com/posts/harsh-deep02_deloitte-articleship-vacancy-openings-activity-7476627909063954433-SXVL",
-      "verification": "Unverified - check original listing"
-    },
-    {
-      "id": "031da07a0a7c1fa8",
-      "title": "Forvis Mazars Hiring ! Article Trainees- Gurugram Department- Statutory Audit Location- Gurugram Requirements-: * Both group should be cleared * Graduation should be completed Interested candidates can apply at Jobs@mazars.co.in Subject line- \"Article - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Gurugram",
-      "area": "Audit",
-      "stipend": "",
-      "date": "Tue, 26 May 2026 07:00:00 GMT",
-      "summary": "Forvis Mazars Hiring ! Article Trainees- Gurugram Department- Statutory Audit Location- Gurugram Requirements-: * Both group should be cleared * Graduation should be completed Interested candidates can apply at Jobs@mazars.co.in Subject line- \"Article LinkedIn",
-      "source": "LinkedIn Articleship Posts",
-      "url": "https://www.linkedin.com/posts/priyanka-shankar-b86a89143_forvis-mazars-hiring-article-trainees-activity-7464970099326734337-XVmF",
-      "verification": "Unverified - check original listing"
-    },
-    {
-      "id": "bb2aa927b448ad51",
-      "title": "📢 HIRING UPDATE | CA ARTICLESHIP OFFLINE DRIVE Ready to start your CA journey with hands-on professional experience? 🚀 Vasan & Sampath LLP is looking for aspiring Chartered Accountants who are eager to learn, take on challenges, and grow in a - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Not specified",
-      "area": "Accounts",
-      "stipend": "",
-      "date": "Sun, 25 Oct 2026 07:00:00 GMT",
-      "summary": "📢 HIRING UPDATE | CA ARTICLESHIP OFFLINE DRIVE Ready to start your CA journey with hands-on professional experience? 🚀 Vasan & Sampath LLP is looking for aspiring Chartered Accountants who are eager to learn, take on challenges, and grow in a LinkedIn",
-      "source": "LinkedIn Articleship Posts",
-      "url": "https://www.linkedin.com/posts/vasansampath_hiring-caarticleship-castudents-activity-7520182632605868032-M1_S",
-      "verification": "Unverified - check original listing"
-    },
-    {
-      "id": "f0792e8801530e68",
-      "title": "🚨 We’re Hiring: CA Article Assistant 🚨 📍 Location: Navyug Market, Ghaziabad 🏢 Organization: KGRG Group KGRG Group is looking to onboard a dedicated and enthusiastic CA Article Assistant to join our growing team. This is a great opportunity for aspiring C - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Ghaziabad",
-      "area": "Articleship",
-      "stipend": "",
-      "date": "Mon, 02 Nov 2026 06:25:02 GMT",
-      "summary": "🚨 We’re Hiring: CA Article Assistant 🚨 📍 Location: Navyug Market, Ghaziabad 🏢 Organization: KGRG Group KGRG Group is looking to onboard a dedicated and enthusiastic CA Article Assistant to join our growing team. This is a great opportunity for aspiring C LinkedIn",
-      "source": "LinkedIn Article Assistant Posts",
-      "url": "https://www.linkedin.com/posts/sparsh-gupta-915a67195_were-hiring-ca-article-assistant-activity-7522906601591164928-rbzz",
-      "verification": "Unverified - check original listing"
-    },
-    {
-      "id": "97cc1d0a8c9f8a1b",
-      "title": "WE ARE HIRING – CA ARTICLE ASSISTANTS Join Pipara & Co LLP and begin your professional journey with hands-on exposure in Audit, Taxation, and Consulting. 📍 Location: New Delhi 💼 Position: CA Article Assistant ⚠ Important: Registration is mandator - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Delhi",
-      "area": "Audit",
-      "stipend": "",
-      "date": "Thu, 22 Oct 2026 07:00:00 GMT",
-      "summary": "WE ARE HIRING – CA ARTICLE ASSISTANTS Join Pipara & Co LLP and begin your professional journey with hands-on exposure in Audit, Taxation, and Consulting. 📍 Location: New Delhi 💼 Position: CA Article Assistant ⚠ Important: Registration is mandator LinkedIn",
-      "source": "LinkedIn Article Assistant Posts",
-      "url": "https://www.linkedin.com/posts/pipara_we-are-hiring-ca-article-assistants-join-activity-7519272279743193089-breo",
-      "verification": "Unverified - check original listing"
-    },
-    {
-      "id": "23d733c24291ad39",
-      "title": "We're Hiring: Article Assistant (CA Articleship) 📍 Location: Sion & GTB Nagar, Mumbai 🕒 Timing: Monday to Friday | 10:30 AM – 7:30 PM Join Shah Kapadia & Associates (SKA), one of India's leading CA firms in the Capital Markets domain, serving 100+ SEBI- - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Mumbai",
-      "area": "Articleship",
-      "stipend": "",
-      "date": "Wed, 10 Jun 2026 07:00:00 GMT",
-      "summary": "We're Hiring: Article Assistant (CA Articleship) 📍 Location: Sion & GTB Nagar, Mumbai 🕒 Timing: Monday to Friday | 10:30 AM – 7:30 PM Join Shah Kapadia & Associates (SKA), one of India's leading CA firms in the Capital Markets domain, serving 100+ SEBI- LinkedIn",
-      "source": "LinkedIn Article Assistant Posts",
-      "url": "https://www.linkedin.com/posts/shah-kapadia-associates_caarticleship-articleassistant-hiring-activity-7470429167562452992-d-kG",
+      "url": "https://www.linkedin.com/posts/sjandcompany_bdo-ahmedabad-ca-articleship-vacancy-activity-7523330736997838848-Ze7Z",
       "verification": "Unverified - check original listing"
     },
     {
       "id": "82a9bfa4bbed6310",
       "title": "📢 VACANCY ALERT | CA Article Assistant 🏢 VK Dhingra & Co. | Chartered Accountants 📍 Jhandewalan & Gurgaon ⏳ 50+ Years of Excellence --- We are looking for motivated CA Article Assistants who have cleared their exams in May 2026 and are eager to b - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Gurgaon",
-      "area": "Accounts",
+      "firm": "📢",
+      "role": "Article Assistant",
+      "location": "Gurugram",
+      "locations": [
+        "Gurugram"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
       "stipend": "",
       "date": "Mon, 02 Nov 2026 16:27:11 GMT",
       "summary": "📢 VACANCY ALERT | CA Article Assistant 🏢 VK Dhingra & Co. | Chartered Accountants 📍 Jhandewalan & Gurgaon ⏳ 50+ Years of Excellence --- We are looking for motivated CA Article Assistants who have cleared their exams in May 2026 and are eager to b LinkedIn",
@@ -183,24 +187,102 @@
       "verification": "Unverified - check original listing"
     },
     {
-      "id": "a1452c7044ac1c11",
-      "title": "We Are Hiring: Article Assistants at Zinzuwadia & Co., Chartered Accountants An Exciting Opportunity for CA Students Zinzuwadia & Co. is inviting applications for the position of Article Assistant. This is an excellent opportunity for CA students who wish to gain - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Not specified",
-      "area": "Accounts",
+      "id": "d338af536cf6095c",
+      "title": "*New Vacancy Alert!* 📌 *CA Articleship – Capital Market Compliance* Company Name : Sanjay Shah & Co LLP – Chartered Accountants Location : Malad (West), Mumbai Qualification : CA Intermediate Job Title : CA Articleship – Capital Market Compliance R - LinkedIn",
+      "firm": "*New",
+      "role": "Ca Articleship",
+      "location": "Mumbai, Malad",
+      "locations": [
+        "Mumbai",
+        "Malad"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
       "stipend": "",
-      "date": "Thu, 05 Nov 2026 07:18:39 GMT",
-      "summary": "We Are Hiring: Article Assistants at Zinzuwadia & Co., Chartered Accountants An Exciting Opportunity for CA Students Zinzuwadia & Co. is inviting applications for the position of Article Assistant. This is an excellent opportunity for CA students who wish to gain LinkedIn",
+      "date": "Mon, 02 Nov 2026 09:16:40 GMT",
+      "summary": "*New Vacancy Alert!* 📌 *CA Articleship – Capital Market Compliance* Company Name : Sanjay Shah & Co LLP – Chartered Accountants Location : Malad (West), Mumbai Qualification : CA Intermediate Job Title : CA Articleship – Capital Market Compliance R LinkedIn",
+      "source": "LinkedIn Articleship Posts",
+      "url": "https://www.linkedin.com/posts/fincom-nexus_new-vacancy-alert-ca-articleship-activity-7522949793816530944-nPqX",
+      "verification": "Unverified - check original listing"
+    },
+    {
+      "id": "f0792e8801530e68",
+      "title": "🚨 We’re Hiring: CA Article Assistant 🚨 📍 Location: Navyug Market, Ghaziabad 🏢 Organization: KGRG Group KGRG Group is looking to onboard a dedicated and enthusiastic CA Article Assistant to join our growing team. This is a great opportunity for aspiring C - LinkedIn",
+      "firm": "🚨 We’re",
+      "role": "Article Assistant",
+      "location": "Ghaziabad",
+      "locations": [
+        "Ghaziabad"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
+      "stipend": "",
+      "date": "Mon, 02 Nov 2026 06:25:02 GMT",
+      "summary": "🚨 We’re Hiring: CA Article Assistant 🚨 📍 Location: Navyug Market, Ghaziabad 🏢 Organization: KGRG Group KGRG Group is looking to onboard a dedicated and enthusiastic CA Article Assistant to join our growing team. This is a great opportunity for aspiring C LinkedIn",
       "source": "LinkedIn Article Assistant Posts",
-      "url": "https://www.linkedin.com/posts/zinzuwadia-and-co-383645315_we-are-hiring-article-assistants-at-zinzuwadia-activity-7524007258817654784-aRXZ",
+      "url": "https://www.linkedin.com/posts/sparsh-gupta-915a67195_were-hiring-ca-article-assistant-activity-7522906601591164928-rbzz",
+      "verification": "Unverified - check original listing"
+    },
+    {
+      "id": "bb2aa927b448ad51",
+      "title": "📢 HIRING UPDATE | CA ARTICLESHIP OFFLINE DRIVE Ready to start your CA journey with hands-on professional experience? 🚀 Vasan & Sampath LLP is looking for aspiring Chartered Accountants who are eager to learn, take on challenges, and grow in a - LinkedIn",
+      "firm": "📢",
+      "role": "Ca Articleship",
+      "location": "Not specified",
+      "locations": [],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
+      "stipend": "",
+      "date": "Sun, 25 Oct 2026 07:00:00 GMT",
+      "summary": "📢 HIRING UPDATE | CA ARTICLESHIP OFFLINE DRIVE Ready to start your CA journey with hands-on professional experience? 🚀 Vasan & Sampath LLP is looking for aspiring Chartered Accountants who are eager to learn, take on challenges, and grow in a LinkedIn",
+      "source": "LinkedIn Articleship Posts",
+      "url": "https://www.linkedin.com/posts/vasansampath_hiring-caarticleship-castudents-activity-7520182632605868032-M1_S",
+      "verification": "Unverified - check original listing"
+    },
+    {
+      "id": "97cc1d0a8c9f8a1b",
+      "title": "WE ARE HIRING – CA ARTICLE ASSISTANTS Join Pipara & Co LLP and begin your professional journey with hands-on exposure in Audit, Taxation, and Consulting. 📍 Location: New Delhi 💼 Position: CA Article Assistant ⚠ Important: Registration is mandator - LinkedIn",
+      "firm": "WE ARE",
+      "role": "Article Assistant",
+      "location": "Delhi",
+      "locations": [
+        "Delhi"
+      ],
+      "area": "Taxation",
+      "department": [
+        "Audit",
+        "Taxation"
+      ],
+      "exposure": [
+        "Audit",
+        "Taxation"
+      ],
+      "stipend": "",
+      "date": "Thu, 22 Oct 2026 07:00:00 GMT",
+      "summary": "WE ARE HIRING – CA ARTICLE ASSISTANTS Join Pipara & Co LLP and begin your professional journey with hands-on exposure in Audit, Taxation, and Consulting. 📍 Location: New Delhi 💼 Position: CA Article Assistant ⚠ Important: Registration is mandator LinkedIn",
+      "source": "LinkedIn Article Assistant Posts",
+      "url": "https://www.linkedin.com/posts/pipara_we-are-hiring-ca-article-assistants-join-activity-7519272279743193089-breo",
       "verification": "Unverified - check original listing"
     },
     {
       "id": "ce57f131091c2748",
       "title": "🚀 We’re Hiring | CA Article Assistant – Investment Banking | Gurugram We are looking for a motivated and enthusiastic CA Article Assistant to join our Investment Banking team at FundTQ. This opportunity offers hands-on exposure to live fundraising, valuation, - LinkedIn",
-      "firm": "Verify with original source",
+      "firm": "🚀 We’re",
+      "role": "Article Assistant",
       "location": "Gurugram",
-      "area": "Articleship",
+      "locations": [
+        "Gurugram"
+      ],
+      "area": "Finance",
+      "department": [
+        "Finance"
+      ],
+      "exposure": [
+        "Finance"
+      ],
       "stipend": "",
       "date": "Mon, 29 Jun 2026 07:00:00 GMT",
       "summary": "🚀 We’re Hiring | CA Article Assistant – Investment Banking | Gurugram We are looking for a motivated and enthusiastic CA Article Assistant to join our Investment Banking team at FundTQ. This opportunity offers hands-on exposure to live fundraising, valuation, LinkedIn",
@@ -209,20 +291,74 @@
       "verification": "Unverified - check original listing"
     },
     {
-      "id": "ab570536ef8e0f87",
-      "title": "We're Hiring | Article Assistants | Brahmayya & Co — Delhi (Bhikaji Cama Place) ✅ Eligibility Criteria · CA Intermediate — Both Groups cleared · ITT & Orientation Programme (ICAI) completed 📌 What you'll work on · Statutory Audit & Assurance (listed and unlis - LinkedIn",
-      "firm": "Verify with original source",
-      "location": "Delhi",
-      "area": "Audit",
+      "id": "cd7ca85d67fa11db",
+      "title": "Deloitte Articleship Vacancy Openings 🚀 Following are the available locations along with their respective Job IDs: • Mumbai — 107772 • Delhi — 107616 • Bangalore — 107764 • Hyderabad — 107765 • Chennai — 107768 • Kochi — 107767 • Coimbatore — - LinkedIn",
+      "firm": "Deloitte Articleship",
+      "role": "Articleship",
+      "location": "Bengaluru, Mumbai, Delhi, Chennai, Hyderabad, Kochi, Coimbatore",
+      "locations": [
+        "Bengaluru",
+        "Mumbai",
+        "Delhi",
+        "Chennai",
+        "Hyderabad",
+        "Kochi",
+        "Coimbatore"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
       "stipend": "",
-      "date": "Wed, 04 Nov 2026 07:11:06 GMT",
-      "summary": "We're Hiring | Article Assistants | Brahmayya & Co — Delhi (Bhikaji Cama Place) ✅ Eligibility Criteria · CA Intermediate — Both Groups cleared · ITT & Orientation Programme (ICAI) completed 📌 What you'll work on · Statutory Audit & Assurance (listed and unlis LinkedIn",
+      "date": "Sat, 27 Jun 2026 07:00:00 GMT",
+      "summary": "Deloitte Articleship Vacancy Openings 🚀 Following are the available locations along with their respective Job IDs: • Mumbai — 107772 • Delhi — 107616 • Bangalore — 107764 • Hyderabad — 107765 • Chennai — 107768 • Kochi — 107767 • Coimbatore — LinkedIn",
+      "source": "LinkedIn Articleship Posts",
+      "url": "https://www.linkedin.com/posts/harsh-deep02_deloitte-articleship-vacancy-openings-activity-7476627909063954433-SXVL",
+      "verification": "Unverified - check original listing"
+    },
+    {
+      "id": "23d733c24291ad39",
+      "title": "We're Hiring: Article Assistant (CA Articleship) 📍 Location: Sion & GTB Nagar, Mumbai 🕒 Timing: Monday to Friday | 10:30 AM – 7:30 PM Join Shah Kapadia & Associates (SKA), one of India's leading CA firms in the Capital Markets domain, serving 100+ SEBI- - LinkedIn",
+      "firm": "We're",
+      "role": "Article Assistant",
+      "location": "Mumbai",
+      "locations": [
+        "Mumbai"
+      ],
+      "area": "General Articleship",
+      "department": [],
+      "exposure": [],
+      "stipend": "",
+      "date": "Wed, 10 Jun 2026 07:00:00 GMT",
+      "summary": "We're Hiring: Article Assistant (CA Articleship) 📍 Location: Sion & GTB Nagar, Mumbai 🕒 Timing: Monday to Friday | 10:30 AM – 7:30 PM Join Shah Kapadia & Associates (SKA), one of India's leading CA firms in the Capital Markets domain, serving 100+ SEBI- LinkedIn",
       "source": "LinkedIn Article Assistant Posts",
-      "url": "https://www.linkedin.com/posts/brahmayya_were-hiring-article-assistants-brahmayya-activity-7523642970869248000-4m4Y",
+      "url": "https://www.linkedin.com/posts/shah-kapadia-associates_caarticleship-articleassistant-hiring-activity-7470429167562452992-d-kG",
+      "verification": "Unverified - check original listing"
+    },
+    {
+      "id": "031da07a0a7c1fa8",
+      "title": "Forvis Mazars Hiring ! Article Trainees- Gurugram Department- Statutory Audit Location- Gurugram Requirements-: * Both group should be cleared * Graduation should be completed Interested candidates can apply at Jobs@mazars.co.in Subject line- \"Article - LinkedIn",
+      "firm": "Forvis Mazars",
+      "role": "CA Articleship",
+      "location": "Gurugram",
+      "locations": [
+        "Gurugram"
+      ],
+      "area": "Audit",
+      "department": [
+        "Audit"
+      ],
+      "exposure": [
+        "Audit"
+      ],
+      "stipend": "",
+      "date": "Tue, 26 May 2026 07:00:00 GMT",
+      "summary": "Forvis Mazars Hiring ! Article Trainees- Gurugram Department- Statutory Audit Location- Gurugram Requirements-: * Both group should be cleared * Graduation should be completed Interested candidates can apply at Jobs@mazars.co.in Subject line- \"Article LinkedIn",
+      "source": "LinkedIn Articleship Posts",
+      "url": "https://www.linkedin.com/posts/priyanka-shankar-b86a89143_forvis-mazars-hiring-article-trainees-activity-7464970099326734337-XVmF",
       "verification": "Unverified - check original listing"
     }
   ],
-  "last_updated": "2026-11-09T20:09:00.337116+00:00",
+  "last_updated": "2026-11-09T20:32:57.811968+00:00",
   "status": "Collection completed",
   "successful_feeds": 10,
   "total_sources": 10,
