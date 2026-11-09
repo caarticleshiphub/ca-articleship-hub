@@ -18,7 +18,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCES_FILE = ROOT / "sources.json"
 JOBS_FILE = ROOT / "jobs.json"
 
-USER_AGENT = "Mozilla/5.0 CAArticleshipHub/4.0"
+USER_AGENT = "Mozilla/5.0 CAArticleshipHub/5.0"
+
 
 RECRUITMENT_TERMS = [
     "vacancy", "vacancies", "hiring", "opening", "openings",
@@ -38,6 +39,7 @@ ARTICLESIP_TERMS = [
     "article assistant", "ca articles",
     "articles required", "articles wanted"
 ]
+
 
 CITY_ALIASES = {
     "Bengaluru": ["bengaluru", "bangalore"],
@@ -64,9 +66,7 @@ CITY_ALIASES = {
     "Kozhikode": ["kozhikode", "calicut"],
     "Thrissur": ["thrissur"],
     "Coimbatore": ["coimbatore"],
-    "Thiruvananthapuram": [
-        "thiruvananthapuram", "trivandrum"
-    ],
+    "Thiruvananthapuram": ["thiruvananthapuram", "trivandrum"],
     "Borivali": ["borivali"],
     "Malad": ["malad"],
     "Thane": ["thane"],
@@ -167,7 +167,6 @@ def find_locations(text):
         ):
             found.append(city)
 
-    # Keep the result unique and preserve the defined city order.
     return found
 
 
@@ -201,79 +200,138 @@ def extract_role(text):
     return "CA Articleship"
 
 
-def extract_firm(title):
+def extract_firm(text):
     """
-    Conservative title-based extraction.
-    If a reliable firm name cannot be identified, do not guess.
+    Extract firm names using explicit labels and common
+    recruitment wording. Avoid guessing when uncertain.
     """
 
-    value = clean(title)
+    text = clean(text)
 
-    value = re.sub(
-        r"\s*[-|–]\s*(LinkedIn|Google News).*$",
+    text = re.sub(
+        r"\s*[-|–]\s*LinkedIn.*$",
         "",
-        value,
+        text,
         flags=re.I
     )
 
-    separators = [
-        " - CA Articleship",
-        " | CA Articleship",
-        " - Articleship",
-        " | Articleship",
-        " hiring",
-        " is hiring",
-        " invites applications",
-        " vacancy",
-        " vacancies",
-        " articles required",
-        " article trainee"
+    text = text.replace("*", "").replace("_", "")
+
+    stop_pattern = (
+        r"\s*(?:📍|🏢|💼|⏳|📌|"
+        r"Location\s*:|Role\s*:|Position\s*:|"
+        r"Department\s*:|Domain\s*:|"
+        r"Qualification\s*:|Eligibility\s*:)"
+    )
+
+    patterns = [
+        # Explicit firm/company labels.
+        r"(?:Firm|Organization|Company Name)\s*:\s*(.{2,100})",
+
+        # Example: Join Pipara & Co LLP and begin your career.
+        r"\bJoin\s+(.{2,85}?)(?=\s+(?:and|to)\s+"
+        r"(?:build|begin|start|grow)|[.!])",
+
+        # Example: Team at FundTQ.
+        r"\b(?:team|position|opportunity)\s+at\s+"
+        r"([A-Z][A-Za-z0-9&.'’ -]{2,75}?)"
+        r"(?=\s+(?:is|for|in|to)\b|[.,;!])",
+
+        # Example: at Zinzuwadia & Co. is inviting applications.
+        r"\bat\s+([A-Z][A-Za-z0-9&.'’ -]{2,75}?)"
+        r"(?=\s+is\s+(?:inviting|looking|hiring)|[.,;!])",
+
+        # Names ending in common firm suffixes.
+        r"\b([A-Z][A-Za-z0-9&.'’ -]{1,65}?"
+        r"(?:&\s*Co\.?|Associates|LLP|Group|"
+        r"Private Limited|Pvt\.?\s*Ltd\.?|"
+        r"Chartered Accountants))"
+        r"(?=\s*[,|–—.]|\s+[A-Z0-9]|\s*$)"
     ]
 
-    lower_value = value.lower()
+    for pattern in patterns:
+        match = re.search(pattern, text, re.I)
 
-    for separator in separators:
-        position = lower_value.find(separator)
+        if not match:
+            continue
 
-        if position > 0:
-            value = value[:position].strip()
-            break
+        candidate = match.group(1)
 
-    value = re.sub(r"^(ca articleship vacancy|articleship vacancy)\s*[-:|]?\s*", "", value, flags=re.I)
-    value = value.strip(" -|:–")
+        candidate = re.split(
+            stop_pattern,
+            candidate,
+            maxsplit=1,
+            flags=re.I
+        )[0]
 
-    generic = [
-        "ca articleship", "articleship vacancy",
-        "article trainee", "article assistant",
-        "articles required", "articles wanted"
-    ]
+        candidate = re.split(
+            r"\s+(?:and build|and begin|and start|"
+            r"is inviting|is looking|inviting applications|"
+            r"we are looking|we're looking)",
+            candidate,
+            maxsplit=1,
+            flags=re.I
+        )[0]
 
-    if not value or value.lower() in generic:
-        return "Verify with original source"
+        candidate = candidate.strip(
+            " \t-–|:,.!🚨📌🏢*"
+        )
 
-    if len(value) > 90:
-        return "Verify with original source"
+        generic = [
+            "we are", "we're", "new",
+            "new vacancy alert", "vacancy alert",
+            "hiring", "ca articleship",
+            "article assistant", "article trainee",
+            "articleship vacancy"
+        ]
 
-    return value
+        if (
+            len(candidate) >= 3
+            and len(candidate) <= 85
+            and candidate.lower() not in generic
+            and not candidate.lower().startswith(
+                ("we are ", "we're ", "new vacancy")
+            )
+        ):
+            return candidate
+
+    return "Verify with original source"
 
 
 def classify(text):
     text = text.lower()
 
-    # Specific department terms are checked before general terms.
-    if re.search(r"\b(gst|goods and services tax|indirect tax)\b", text):
+    if re.search(
+        r"\b(gst|goods and services tax|indirect tax)\b",
+        text
+    ):
         return "GST"
 
-    if re.search(r"\b(internal audit|statutory audit|tax audit|audit and assurance|auditing)\b", text):
+    if re.search(
+        r"\b(internal audit|statutory audit|tax audit|"
+        r"audit and assurance|auditing)\b",
+        text
+    ):
         return "Audit"
 
-    if re.search(r"\b(direct tax|income tax|taxation|tax compliance|tax representation)\b", text):
+    if re.search(
+        r"\b(direct tax|income tax|taxation|"
+        r"tax compliance|tax representation)\b",
+        text
+    ):
         return "Taxation"
 
-    if re.search(r"\b(bookkeeping|accounting|accounts department|financial accounting)\b", text):
+    if re.search(
+        r"\b(bookkeeping|accounting|accounts department|"
+        r"financial accounting)\b",
+        text
+    ):
         return "Accounts"
 
-    if re.search(r"\b(financial management|finance|investment banking)\b", text):
+    if re.search(
+        r"\b(financial management|finance|investment banking)\b",
+        text
+    ):
         return "Finance"
 
     return "General Articleship"
@@ -283,15 +341,11 @@ def extract_exposure(text):
     text_lower = text.lower()
 
     departments = {
-        "Audit": [
-            "audit", "auditing", "assurance"
-        ],
+        "Audit": ["audit", "auditing", "assurance"],
         "Taxation": [
             "taxation", "income tax", "direct tax", "tax audit"
         ],
-        "GST": [
-            "gst", "indirect tax"
-        ],
+        "GST": ["gst", "indirect tax"],
         "Accounts": [
             "accounting", "accounts", "bookkeeping"
         ],
@@ -368,7 +422,9 @@ def fetch_feed(source):
         if element.tag.split("}")[-1] in ("item", "entry")
     ]
 
-    print(f'{source["name"]}: Raw feed entries = {len(items)}')
+    print(
+        f'{source["name"]}: Raw feed entries = {len(items)}'
+    )
 
     results = []
 
@@ -389,17 +445,142 @@ def fetch_feed(source):
         combined_lower = combined.lower()
         title_lower = title.lower()
 
-        if not any(term in combined_lower for term in ARTICLESIP_TERMS):
+        if not any(
+            term in combined_lower
+            for term in ARTICLESIP_TERMS
+        ):
             continue
 
-        if not any(term in combined_lower for term in RECRUITMENT_TERMS):
+        if not any(
+            term in combined_lower
+            for term in RECRUITMENT_TERMS
+        ):
             continue
 
-        if any(term in title_lower for term in EXCLUDE_TERMS):
+        if any(
+            term in title_lower
+            for term in EXCLUDE_TERMS
+        ):
             continue
 
         if not recent_date(pub_date):
             continue
+
+        if not link.startswith(("https://", "http://")):
+            continue
+
+        original_link = resolve_link(link)
+        locations = find_locations(combined)
+        exposure = extract_exposure(combined)
+
+        job = {
+            "id": hashlib.sha256(
+                original_link.encode("utf-8")
+            ).hexdigest()[:16],
+
+            "title": title,
+            "firm": extract_firm(combined),
+            "role": extract_role(combined),
+            "location": ", ".join(locations) if locations else "Not specified",
+            "locations": locations,
+            "area": classify(combined),
+            "department": exposure,
+            "exposure": exposure,
+            "stipend": extract_stipend(combined),
+            "date": pub_date,
+            "summary": extract_summary(description, title),
+            "source": source["name"],
+            "url": original_link,
+            "verification": "Unverified - check original listing"
+        }
+
+        results.append(job)
+
+    return results
+
+
+def main():
+    with open(SOURCES_FILE, encoding="utf-8") as file:
+        sources = json.load(file)["sources"]
+
+    jobs = {}
+    successful = 0
+    errors = []
+
+    for source in sources:
+        try:
+            found = fetch_feed(source)
+
+            for job in found:
+                duplicate_key = make_duplicate_key(job)
+
+                if duplicate_key not in jobs:
+                    jobs[duplicate_key] = job
+
+            successful += 1
+
+            print(
+                f'{source["name"]}: '
+                f'{len(found)} possible vacancies'
+            )
+
+        except Exception as error:
+            errors.append(
+                f'{source["name"]}: {error}'
+            )
+
+            print(
+                f'Feed failed: {source["name"]}: {error}'
+            )
+
+    all_jobs = list(jobs.values())
+
+    def sort_date(job):
+        try:
+            return parsedate_to_datetime(
+                job["date"]
+            ).timestamp()
+        except Exception:
+            return 0
+
+    all_jobs.sort(
+        key=sort_date,
+        reverse=True
+    )
+
+    output = {
+        "jobs": all_jobs[:500],
+        "last_updated": datetime.now(timezone.utc).isoformat(),
+        "status": (
+            "Collection completed"
+            if successful
+            else "All feeds failed"
+        ),
+        "successful_feeds": successful,
+        "total_sources": len(sources),
+        "feed_errors": errors
+    }
+
+    with open(
+        JOBS_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+        json.dump(
+            output,
+            file,
+            indent=2,
+            ensure_ascii=False
+        )
+
+    print(
+        f'Total possible vacancies: {len(output["jobs"])}'
+    )
+
+
+if __name__ == "__main__":
+    main()
+ue
 
         if not link.startswith(("https://", "http://")):
             continue
